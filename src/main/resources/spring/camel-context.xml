@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="        http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd        http://camel.apache.org/schema/spring       https://camel.apache.org/schema/spring/camel-spring.xsd">
+    <bean class="org.hanabank.routes.WebHookRoute" id="webHookRoute"/>
+    <bean class="org.hanabank.object.token.Token" id="token" scope="singleton"/>
+    <bean class="org.hanabank.util.SSLRegistry" id="ssl" scope="singleton"/>
+    <bean class="org.hanabank.util.SSLRegistryDynamic" id="sslDyn" scope="singleton"/>
+    <bean class="org.hanabank.service.UserService" id="userService"/>
+    <bean class="org.hanabank.service.PasswordService" id="passwordService"/>
+    <bean class="org.hanabank.object.findUsername.User" id="user"/>
+    <bean class="org.hanabank.object.findUsername.Users" id="users"/>
+    <bean class="org.hanabank.object.password.Password" id="password"/>
+    <camelContext id="camel" xmlns="http://camel.apache.org/schema/spring">
+        <dataFormats>
+            <json allowUnmarshallType="false" contentTypeHeader="false"
+                enableJaxbAnnotationModule="false" id="jsonData"
+                library="Jackson" prettyPrint="false"
+                unmarshalTypeName="org.hanabank.object.findUsername.User"
+                useDefaultObjectMapper="true" useList="true"/>
+            <json allowJmsType="false" allowUnmarshallType="false"
+                contentTypeHeader="false"
+                enableJaxbAnnotationModule="false"
+                id="password-json-data" library="Jackson"
+                prettyPrint="false"
+                unmarshalTypeName="org.hanabank.object.password.Password"
+                useDefaultObjectMapper="false" useList="false"/>
+            <json allowJmsType="false" allowUnmarshallType="false"
+                contentTypeHeader="false"
+                enableJaxbAnnotationModule="false" id="client-json-data"
+                library="Jackson" prettyPrint="false"
+                unmarshalTypeName="org.hanabank.object.client.Client"
+                useDefaultObjectMapper="false" useList="true"/>
+        </dataFormats>
+    </camelContext>
+</beans>
